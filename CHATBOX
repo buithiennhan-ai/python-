@@ -79,8 +79,50 @@ def chatbot(msg):
         else:
             return "Vui lòng nhập: đi học / đi làm / đi phượt."
 
-        trang_thai["buoc"] = 4
-        return "Bạn thích màu sắc nào? (trắng / đen / đỏ / xanh / xám)"
+    if trang_thai["buoc"] == 4:
+        cac_mau = ["trắng", "đen", "đỏ", "xanh", "xám"]
+        for mau in cac_mau:
+            if mau in msg:
+                trang_thai["mau_sac"] = mau
+                trang_thai["buoc"] = 5
+                return "Bạn thích kiểu dáng nào? (trẻ trung / thể thao / sang trọng / cổ điển)"
+        return "Vui lòng chọn màu: trắng, đen, đỏ, xanh hoặc xám."
+
+    if trang_thai["buoc"] == 5:
+        cac_kieu = ["trẻ trung", "thể thao", "sang trọng", "cổ điển"]
+        for kieu in cac_kieu:
+            if kieu in msg:
+                trang_thai["kieu_dang"] = kieu
+                break
+        else:
+            return "Vui lòng nhập: trẻ trung / thể thao / sang trọng / cổ điển."
+
+    ket_qua = tu_van_xe(
+        danh_sach_xe,
+        trang_thai["gia"],
+        trang_thai["loai"],
+        trang_thai["muc_dich"],
+        trang_thai["mau_sac"],
+        trang_thai["kieu_dang"]
+    )
+
+    trang_thai["buoc"] = 0
+
+    if not ket_qua:
+        return "Không có xe phù hợp với yêu cầu bạn chọn."
+
+    rep = "Danh sách xe phù hợp:\n"
+    for xe in ket_qua:
+        rep += (
+            f"\nTên xe: {xe['ten_xe']}"
+            f"\nGiá: {xe['muc_gia']:,} đồng"
+            f"\nMàu sắc: {', '.join(xe['mau_sac'])}"
+            f"\nKiểu dáng: {', '.join(xe['kieu_dang'])}"
+            f"\nMô tả: {xe['mo_ta']}\n"
+            "------------------------------"
+        )
+
+    return rep + "\nNhập bất kỳ nội dung nào để tư vấn lại."
 # ===================== GIAO DIỆN =====================
 root = tk.Tk()
 root.title("Chatbot tư vấn mua xe")
