@@ -11,6 +11,26 @@ danh_sach_xe = [
   {"ten_xe": "Honda Wave Alpha","hang": "Honda", "mau_sac": ["trắng", "đen", "đỏ", "xanh", "xám"], "kieu_dang": ["trẻ trung"],"muc_gia": 18500000,"loai_xe": "xe số","phan_khoi": 110,"muc_dich": ["đi học", "đi làm"],"mo_ta": "Honda Wave Alpha 110cc là một mẫu xe máy nổi bật với thiết kế đơn giản nhưng tinh tế, mang lại vẻ đẹp hài hòa và cân đối nhờ vào những đường nét trau chuốt tỉ mỉ. Xe có nhiều tùy chọn màu sắc, giúp người dùng dễ dàng tìm được chiếc xe phù hợp với cá tính của mình."},
   {"ten_xe": "Honda Wave RSX","hang": "Honda","mau_sac": ["trắng", "đen", "đỏ"],"kieu_dang": ["thể thao", "trẻ trung"],"muc_gia": 31000000,"loai_xe": "xe số","phan_khoi": 110,"muc_dich": ["đi học", "đi làm"],"mo_ta": "Honda Wave RSX sở hữu kiểu dáng thể thao, phù hợp với phong cách của những người trẻ năng động. Đối với những người di chuyển thường xuyên trong thành phố, Wave RSX mang lại sự tiện lợi, độ bền cao và chi phí vận hành thấp, chính vì thế mà mẫu xe này luôn được yêu thích và chọn lựa. Dù là học sinh, sinh viên hay người đi làm, Honda Wave RSX đều đáp ứng đầy đủ các yêu cầu về một phương tiện di chuyển hiệu quả và tiết kiệm."},
 ]
+trang_thai = {
+    "buoc": 0,
+    "gia": None,
+    "loai": None,
+    "muc_dich": None,
+    "mau_sac": None,
+    "kieu_dang": None
+}
+def tu_van_xe(ds, gia_khoang, loai_xe, muc_dich, mau_sac, kieu_dang):
+    ket_qua = []
+    for xe in ds:
+        if (
+            gia_khoang[0] <= xe["muc_gia"] <= gia_khoang[1]
+            and xe["loai_xe"] == loai_xe
+            and muc_dich in xe["muc_dich"]
+            and mau_sac in xe["mau_sac"]
+            and kieu_dang in xe["kieu_dang"]
+        ):
+            ket_qua.append(xe)
+    return ket_qua
 def chatbot(msg):
     msg = msg.lower()
     if trang_thai["buoc"] == 0:
