@@ -9,3 +9,53 @@ danh_sach_xe = [
   {"ten_xe": "Honda Wave Alpha","hang": "Honda", "mau_sac": ["trắng", "đen", "đỏ", "xanh", "xám"], "kieu_dang": ["trẻ trung"],"muc_gia": 18500000,"loai_xe": "xe số","phan_khoi": 110,"muc_dich": ["đi học", "đi làm"],"mo_ta": "Honda Wave Alpha 110cc là một mẫu xe máy nổi bật với thiết kế đơn giản nhưng tinh tế, mang lại vẻ đẹp hài hòa và cân đối nhờ vào những đường nét trau chuốt tỉ mỉ. Xe có nhiều tùy chọn màu sắc, giúp người dùng dễ dàng tìm được chiếc xe phù hợp với cá tính của mình."},
   {"ten_xe": "Honda Wave RSX","hang": "Honda","mau_sac": ["trắng", "đen", "đỏ"],"kieu_dang": ["thể thao", "trẻ trung"],"muc_gia": 31000000,"loai_xe": "xe số","phan_khoi": 110,"muc_dich": ["đi học", "đi làm"],"mo_ta": "Honda Wave RSX sở hữu kiểu dáng thể thao, phù hợp với phong cách của những người trẻ năng động. Đối với những người di chuyển thường xuyên trong thành phố, Wave RSX mang lại sự tiện lợi, độ bền cao và chi phí vận hành thấp, chính vì thế mà mẫu xe này luôn được yêu thích và chọn lựa. Dù là học sinh, sinh viên hay người đi làm, Honda Wave RSX đều đáp ứng đầy đủ các yêu cầu về một phương tiện di chuyển hiệu quả và tiết kiệm."},
 ]
+def chatbot(msg):
+    msg = msg.lower()
+    if trang_thai["buoc"] == 0:
+        trang_thai["buoc"] = 1
+        return (
+            "Chào bạn! Mình là chatbot tư vấn mua xe. Bạn cần hỗ trợ gì? Bạn muốn mua xe với mức giá bao nhiêu?\n\n"
+            "Gợi ý mức giá:\n"
+            "- 20-30 triệu\n"
+            "- 30-50 triệu\n"
+            "- Trên 60 triệu\n\n"
+            "Bạn hãy chọn mức giá cho mình biết nhé!"
+        )
+    if trang_thai["buoc"] == 1:
+        if "20" in msg:
+            trang_thai["gia"] = (20000000, 29999999)
+        elif "30" in msg or "50" in msg:
+            trang_thai["gia"] = (30000000, 49999999)
+        elif "60" in msg:
+            trang_thai["gia"] = (60000000, 100000000)
+        else:
+            return "Vui lòng chọn khoảng tiền: 20-30 / 30-50 / trên 60 triệu."
+
+        trang_thai["buoc"] = 2
+        return "Bạn muốn loại xe nào? (xe số / tay ga / côn tay)"
+
+    if trang_thai["buoc"] == 2:
+        if "ga" in msg:
+            trang_thai["loai"] = "tay ga"
+        elif "số" in msg:
+            trang_thai["loai"] = "xe số"
+        elif "côn" in msg:
+            trang_thai["loai"] = "côn tay"
+        else:
+            return "Vui lòng nhập: xe số / tay ga / côn tay."
+
+        trang_thai["buoc"] = 3
+        return "Mục đích sử dụng? (đi học / đi làm / đi phượt)"
+
+    if trang_thai["buoc"] == 3:
+        if "học" in msg:
+            trang_thai["muc_dich"] = "đi học"
+        elif "làm" in msg:
+            trang_thai["muc_dich"] = "đi làm"
+        elif "phượt" in msg:
+            trang_thai["muc_dich"] = "đi phượt"
+        else:
+            return "Vui lòng nhập: đi học / đi làm / đi phượt."
+
+        trang_thai["buoc"] = 4
+        return "Bạn thích màu sắc nào? (trắng / đen / đỏ / xanh / xám)"
