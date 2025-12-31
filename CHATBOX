@@ -79,6 +79,9 @@ def chatbot(msg):
         else:
             return "Vui lòng nhập: đi học / đi làm / đi phượt."
 
+        trang_thai["buoc"] = 4
+        return "Bạn thích màu sắc nào? (trắng / đen / đỏ / xanh / xám)"
+
     if trang_thai["buoc"] == 4:
         cac_mau = ["trắng", "đen", "đỏ", "xanh", "xám"]
         for mau in cac_mau:
